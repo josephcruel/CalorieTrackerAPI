@@ -1,6 +1,9 @@
 const express = require('express')
+const mongoose = require('mongoose')
 const calorieRouter = require('./routes/calories')
 const app = express()
+
+mongoose.connect('mongodb+srv://josephcruel:UkwKD5LJ9yLIWp12@calories.ifsfwtg.mongodb.net/?retryWrites=true&w=majority')
 
 app.set('view engine', 'ejs')
 
@@ -22,6 +25,7 @@ app.get('/', (req, res) => {
         protein: '14g'
     }]
     res.render('index', { calories: calories })
+    res.render('calories/index', { calories: calories })
 })
 
 app.listen(5000)
