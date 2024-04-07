@@ -11,7 +11,8 @@ app.set('view engine', 'ejs')
 app.use(express.urlencoded({ extended: false }))
 
 app.get('/', async (req, res) => {
-    const calories = await Calorie.find()
+    const calories = await Calorie.find().sort({
+        createdAt: 'desc'})
     res.render('calories/index', { calories: calories })
 })
 
