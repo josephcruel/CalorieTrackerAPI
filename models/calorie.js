@@ -1,5 +1,4 @@
 const mongoose = require('mongoose')
-const marked = require('marked')
 const slugify = require('slugify')
 
 const calorieSchema = new mongoose.Schema({
