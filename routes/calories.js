@@ -1,4 +1,5 @@
 const express = require('express');
+const slugify = require('slugify');
 const Calorie = require('./../models/calorie');
 const router = express.Router();
 
@@ -6,11 +7,11 @@ router.get('/new', (req, res) => {
     res.render('calories/new', { calorie: new Calorie() });
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/:slug', async (req, res) => {
     try {
-        const calorie = await Calorie.findById(req.params.id);
+        const calorie = await Calorie.findOne({ slug: req.params.slug });
         if (!calorie) {
-            res.status(404).send('Calorie not found');
+            res.redirect('/');
             return;
         }
         res.render('calories/show', { calorie });
@@ -23,9 +24,16 @@ router.get('/:id', async (req, res) => {
 router.post('/', async (req, res) => {
     const { name, calorie, sodium, protein } = req.body;
     try {
-        const newCalorie = new Calorie({ name, calorie, sodium, protein });
+        const slug = slugify(name, { lower: true }); 
+        const newCalorie = new Calorie({ 
+            name, 
+            calorie, 
+            sodium, 
+            protein, 
+            slug 
+        });
         const savedCalorie = await newCalorie.save();
-        res.redirect(`/calories/${savedCalorie.id}`);
+        res.redirect(`/calories/${savedCalorie.slug}`); 
     } catch (error) {
         console.error(error);
         res.render('calories/new', { calorie: req.body, error: 'Failed to create calorie entry' });
