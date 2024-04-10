@@ -19,8 +19,8 @@
                     <%= calorie.createdAt.toLocaleDateString() %>
                  </div>
                  <div class="card-text mb-2">Calories: <%= calorie.calorie %></div>
-                 <div class="card-text mb-2">Sodium: <%= calorie.sodium %></div>
-                 <div class="card-text mb-2">Protein: <%= calorie.protein %></div>
+                 <div class="card-text mb-2">Sodium: <%= calorie.sodium %>mg</div>
+                 <div class="card-text mb-2">Protein: <%= calorie.protein %>g</div>
                  <a href="calories/<%= calorie.slug %>" class="btn btn-primary">Read More</a>
                  <form action="/calories/<%= calorie.id %>?_method=DELETE" method="POST" class="d-inline"><button type="submit" class="btn btn-danger">Delete</button></form>
                 </div>
